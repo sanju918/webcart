@@ -1,6 +1,7 @@
 import HeroSection from "./HeroSection";
 import iphone from "../../assets/icons/iphone-14-pro.webp";
 import mac from "../../assets/icons/mac-system-cut.jfif";
+import FeatureProdcuts from "./FeatureProdcuts";
 
 const HomePage = () => {
   return (
@@ -14,7 +15,7 @@ const HomePage = () => {
       />
 
       {/* Featured Products */}
-      <div>Featured Products</div>
+      <FeatureProdcuts />
 
       {/* Hero section */}
       <HeroSection
