@@ -1,8 +1,10 @@
 import "./App.css";
-// import HomePage from "./components/Home/HomePage";
+import CartPage from "./components/Cart/CartPage";
 import Navbar from "./components/Navbar/Navbar";
-import ProductsPage from "./components/Products/ProductsPage";
-import SingleProductPage from "./components/SingleProduct/SingleProductPage";
+
+// import HomePage from "./components/Home/HomePage";
+// import ProductsPage from "./components/Products/ProductsPage";
+// import SingleProductPage from "./components/SingleProduct/SingleProductPage";
 
 const App = () => {
   return (
@@ -12,7 +14,8 @@ const App = () => {
       <main>
         {/* <HomePage /> */}
         {/* <ProductsPage /> */}
-        <SingleProductPage />
+        {/* <SingleProductPage /> */}
+        <CartPage />
       </main>
     </div>
   );
