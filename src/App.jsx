@@ -1,6 +1,7 @@
 import "./App.css";
-import CartPage from "./components/Cart/CartPage";
-import MyOrder from "./components/MyOrder/MyOrder";
+import LoginPage from "./components/Authentication/LoginPage";
+// import CartPage from "./components/Cart/CartPage";
+// import MyOrder from "./components/MyOrder/MyOrder";
 import Navbar from "./components/Navbar/Navbar";
 
 // import HomePage from "./components/Home/HomePage";
@@ -17,7 +18,8 @@ const App = () => {
         {/* <ProductsPage /> */}
         {/* <SingleProductPage /> */}
         {/* <CartPage /> */}
-        <MyOrder />
+        {/* <MyOrder /> */}
+        <LoginPage />
       </main>
     </div>
   );
