@@ -1,7 +1,26 @@
+import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import "./ProductsList.css";
 
+import apiClient from "../../utils/api-client";
+
 const ProductsList = () => {
+  const [products, setProducts] = useState([]);
+  const [errors, setErrors] = useState("");
+
+  useEffect(() => {
+    apiClient
+      .get("/products")
+      .then((res) => {
+        setProducts(res.data.products);
+        setErrors("");
+      })
+      .catch((err) => {
+        setErrors(err.message);
+        setProducts([]);
+      });
+  }, []);
+
   return (
     <>
       <section className="products_list_section">
@@ -17,19 +36,10 @@ const ProductsList = () => {
           </select>
         </header>
         <div className="products_list">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {errors && <em className="form_error">{errors}</em>}
+          {products.map((product) => (
+            <ProductCard key={product._id} />
+          ))}
         </div>
       </section>
     </>
