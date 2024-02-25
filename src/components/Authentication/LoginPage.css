@@ -52,3 +52,7 @@
 .form_submit:hover {
     background-color: #4334e6fd;
 }
+
+.form_error {
+    color: red;
+}

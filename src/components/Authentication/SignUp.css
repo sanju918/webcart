@@ -1,0 +1,24 @@
+.image_preview img {
+    height: 100px;
+    border-radius: 100%;
+    pad: 30px;
+    margin-bottom: 30px;
+}
+
+.input_textarea {
+    height: 120px;
+}
+
+.image_label {
+    height: 25px;
+    width: 100%;
+    margin: 5px;
+    padding: 3px 5px;
+    background-color: blueviolet;
+    color: #fff;
+    cursor: pointer;
+}
+
+.image_input {
+    margin: 10px;
+}
