@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 import LinkWithIcons from "./LinkWithIcons";
 import "./Navbar.css";
 
@@ -42,10 +44,10 @@ const Navbar = () => {
           <LinkWithIcons title="SignUp" link="/signup" emoji={signUpIcon} />
           <LinkWithIcons title="Orders" link="/myorders" emoji={ordersIcon} />
           <LinkWithIcons title="Logout" link="/logout" emoji={logoutIcon} />
-          <a href="/cart" className="align_center">
+          <NavLink href="/cart" className="align_center">
             <img src={cartIcon} alt="cart icon" className="cart_emoji" />
             <p className="align_center cart_counts">0</p>
-          </a>
+          </NavLink>
         </div>
       </nav>
     </>
