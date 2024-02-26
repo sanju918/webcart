@@ -3,14 +3,15 @@ import "./ProductsList.css";
 
 import useData from "../../hooks/useData";
 import ProductCardSkeleton from "./ProductCardSkeleton";
-import { useSearchParams } from "react-router-dom";
-import Pagination from "../Common/Pagination";
+import { useNavigate, useSearchParams } from "react-router-dom";
+// import Pagination from "../Common/Pagination";
+import { useEffect, useState } from "react";
 
 const ProductsList = () => {
-  const [search, setSearch] = useSearchParams();
-
+  const [search] = useSearchParams();
+  const [page, setPage] = useState(1);
   const category = search.get("category");
-  const page = search.get("page");
+  const navigate = useNavigate();
 
   const { data, error, isLoading } = useData(
     "/products",
@@ -19,12 +20,40 @@ const ProductsList = () => {
     },
     [category, page]
   );
+
+  useEffect(() => {
+    setPage(1);
+  }, [category]);
+
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8];
 
-  const handlePageChange = (page) => {
-    const currentParams = Object.fromEntries([...search]);
-    console.log("things", currentParams);
-    setSearch({ ...currentParams, page });
+  // Handles pagination
+  // const handlePageChange = () => {
+  //   const currentParams = Object.fromEntries([...search]);
+  //   setSearch({ ...currentParams, page: parseInt(currentParams.page) + 1 });
+  // };
+
+  // Infinite Scrolling
+  useEffect(() => {
+    const handleScroll = () => {
+      const { scrollTop, clientHeight, scrollHeight } =
+        document.documentElement;
+      if (
+        scrollTop + clientHeight >= scrollHeight - 1 &&
+        !isLoading &&
+        data &&
+        page < data.totalPages
+      ) {
+        setPage((prev) => prev + 1);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [data, isLoading]);
+
+  const handleClick = (product_id) => {
+    navigate(`/api/products/${product_id}`);
   };
 
   return (
@@ -43,30 +72,33 @@ const ProductsList = () => {
         </header>
         <div className="products_list">
           {error && <em className="form_error">{error}</em>}
-          {isLoading
-            ? skeletons.map((item) => <ProductCardSkeleton key={item} />)
-            : data?.products &&
-              data.products.map((product) => (
-                <ProductCard
-                  key={product._id}
-                  id={product._id}
-                  image={product.images[0]}
-                  price={product.price}
-                  title={product.title}
-                  rating={product.reviews.rate}
-                  ratingCounts={product.reviews.counts}
-                  stock={product.stock}
-                />
-              ))}
+          {data?.products &&
+            data.products.map((product) => (
+              <ProductCard
+                key={product._id}
+                id={product._id}
+                image={product.images[0]}
+                price={product.price}
+                title={product.title}
+                rating={product.reviews.rate}
+                ratingCounts={product.reviews.counts}
+                stock={product.stock}
+                // onClick={() => handleClick(product.id)}
+              />
+            ))}
+          {isLoading &&
+            skeletons.map((item) => <ProductCardSkeleton key={item} />)}
         </div>
-        {data && (
+
+        {/* commented out for pagination */}
+        {/* {data && (
           <Pagination
             totalPosts={data.totalProducts}
             postsPerPage={8}
             onClick={handlePageChange}
             currentPage={page}
           />
-        )}
+        )} */}
       </section>
     </>
   );
