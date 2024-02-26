@@ -5,6 +5,7 @@ const Pagination = ({ totalPosts, postsPerPage, onClick, currentPage }) => {
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pages.push(i);
   }
+  console.log("page: ", currentPage);
   return (
     <>
       {pages.length > 1 && (
@@ -13,7 +14,7 @@ const Pagination = ({ totalPosts, postsPerPage, onClick, currentPage }) => {
             <li key={page}>
               <button
                 className={
-                  currentPage === page
+                  parseInt(currentPage) === page
                     ? "pagination_button active"
                     : "pagination_button"
                 }
