@@ -4,18 +4,28 @@ import "./ProductsList.css";
 import useData from "../../hooks/useData";
 import ProductCardSkeleton from "./ProductCardSkeleton";
 import { useSearchParams } from "react-router-dom";
+import Pagination from "../Common/Pagination";
 
 const ProductsList = () => {
   const [search, setSearch] = useSearchParams();
+
   const category = search.get("category");
+  const page = search.get("page");
+
   const { data, error, isLoading } = useData(
     "/products",
     {
-      params: { category },
+      params: { category, page },
     },
-    [category]
+    [category, page]
   );
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8];
+
+  const handlePageChange = (page) => {
+    const currentParams = Object.fromEntries([...search]);
+    console.log("things", currentParams);
+    setSearch({ ...currentParams, page });
+  };
 
   return (
     <>
@@ -49,6 +59,12 @@ const ProductsList = () => {
               />
             ))}
         </div>
+        <Pagination
+          totalPosts={data?.totalProducts}
+          postsPerPage={8}
+          onClick={handlePageChange}
+          currentPage={page}
+        />
       </section>
     </>
   );
