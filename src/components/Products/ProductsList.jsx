@@ -1,25 +1,21 @@
-import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import "./ProductsList.css";
 
-import apiClient from "../../utils/api-client";
+import useData from "../../hooks/useData";
+import ProductCardSkeleton from "./ProductCardSkeleton";
+import { useSearchParams } from "react-router-dom";
 
 const ProductsList = () => {
-  const [products, setProducts] = useState([]);
-  const [errors, setErrors] = useState("");
-
-  useEffect(() => {
-    apiClient
-      .get("/products")
-      .then((res) => {
-        setProducts(res.data.products);
-        setErrors("");
-      })
-      .catch((err) => {
-        setErrors(err.message);
-        setProducts([]);
-      });
-  }, []);
+  const [search, setSearch] = useSearchParams();
+  const category = search.get("category");
+  const { data, error, isLoading } = useData(
+    "/products",
+    {
+      params: { category },
+    },
+    [category]
+  );
+  const skeletons = [1, 2, 3, 4, 5, 6, 7, 8];
 
   return (
     <>
@@ -36,19 +32,22 @@ const ProductsList = () => {
           </select>
         </header>
         <div className="products_list">
-          {errors && <em className="form_error">{errors}</em>}
-          {products.map((product) => (
-            <ProductCard
-              key={product._id}
-              id={product._id}
-              image={product.images[0]}
-              price={product.price}
-              title={product.title}
-              rating={product.reviews.rate}
-              ratingCounts={product.reviews.counts}
-              stock={product.stock}
-            />
-          ))}
+          {error && <em className="form_error">{error}</em>}
+          {isLoading &&
+            skeletons.map((item) => <ProductCardSkeleton key={item} />)}
+          {data?.products &&
+            data.products.map((product) => (
+              <ProductCard
+                key={product._id}
+                id={product._id}
+                image={product.images[0]}
+                price={product.price}
+                title={product.title}
+                rating={product.reviews.rate}
+                ratingCounts={product.reviews.counts}
+                stock={product.stock}
+              />
+            ))}
         </div>
       </section>
     </>
