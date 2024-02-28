@@ -11,7 +11,7 @@ import ordersIcon from "../../assets/icons/orders.png";
 import logoutIcon from "../../assets/icons/power-off.png";
 import cartIcon from "../../assets/icons/cart.png";
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
   return (
     <>
       <nav className="align_center navbar">
@@ -40,14 +40,26 @@ const Navbar = () => {
             link="/products"
             emoji={packageIcon}
           />
-          <LinkWithIcons title="Login" link="/login" emoji={loginIcon} />
-          <LinkWithIcons title="SignUp" link="/signup" emoji={signUpIcon} />
-          <LinkWithIcons title="Orders" link="/myorders" emoji={ordersIcon} />
-          <LinkWithIcons title="Logout" link="/logout" emoji={logoutIcon} />
-          <NavLink href="/cart" className="align_center">
-            <img src={cartIcon} alt="cart icon" className="cart_emoji" />
-            <p className="align_center cart_counts">0</p>
-          </NavLink>
+          {!user && (
+            <>
+              <LinkWithIcons title="Login" link="/login" emoji={loginIcon} />
+              <LinkWithIcons title="SignUp" link="/signup" emoji={signUpIcon} />
+            </>
+          )}
+          {user && (
+            <>
+              <LinkWithIcons
+                title="Orders"
+                link="/myorders"
+                emoji={ordersIcon}
+              />
+              <LinkWithIcons title="Logout" link="/logout" emoji={logoutIcon} />
+              <NavLink href="/cart" className="align_center">
+                <img src={cartIcon} alt="cart icon" className="cart_emoji" />
+                <p className="align_center cart_counts">0</p>
+              </NavLink>
+            </>
+          )}
         </div>
       </nav>
     </>

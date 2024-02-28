@@ -2,6 +2,8 @@ import "./LoginPage.css";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signin } from "../../services/userServices";
+import { useState } from "react";
 
 const loginSchema = z.object({
   email: z
@@ -21,15 +23,26 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm({ resolver: zodResolver(loginSchema) });
 
-  const onSubmit = (formData) => console.log(formData);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onSubmit = (formData) => {
+    signin(formData)
+      .then((res) => {
+        setIsLoading(true);
+        window.location = "/";
+        setIsLoading(false);
+        setError("");
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+        setIsLoading(false);
+      });
+  };
   return (
     <>
       <section className="align_center form_page">
-        <form
-          action=""
-          className="authentication_form"
-          onSubmit={handleSubmit(onSubmit)}
-        >
+        <form className="authentication_form" onSubmit={handleSubmit(onSubmit)}>
           <h2>Login Form</h2>
           <div className="form_inputs">
             <div>
@@ -58,7 +71,10 @@ const LoginPage = () => {
                 <em className="form_error">{errors.password.message}</em>
               )}
             </div>
-            <button className="form_submit">Submit</button>
+            {error && <em className="form_error">{error}</em>}
+            <button className="form_submit">
+              {isLoading ? "Loading..." : "Submit"}
+            </button>
           </div>
         </form>
       </section>

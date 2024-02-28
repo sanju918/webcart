@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 
 import user from "../../assets/icons/user.webp";
+import { signup } from "../../services/userServices";
 
 const signUpSchema = z
   .object({
@@ -20,9 +21,9 @@ const signUpSchema = z
       .min(8, { message: "Must be more than 8 chars" })
       .max(16, { message: "Must not exceed 16 chars" }),
     confirmPassword: z.string(),
-    address: z
+    deliveryAddress: z
       .string()
-      .min(15, { message: "Address must be at least 15 chars." }),
+      .min(15, { message: "Delivery address must be at least 15 chars." }),
   })
   .refine(
     (data) => {
@@ -36,6 +37,9 @@ const signUpSchema = z
 
 const SignUp = () => {
   const [profilePic, setProfilePic] = useState(null);
+  const [formError, setFormError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -44,9 +48,20 @@ const SignUp = () => {
     resolver: zodResolver(signUpSchema),
   });
 
-  const onSubmit = (formData) => console.log(formData);
-
-  console.log(profilePic);
+  const onSubmit = async (formData) => {
+    try {
+      setIsLoading(true);
+      await signup(formData, profilePic);
+      setFormError("");
+      setIsLoading(false);
+      window.location = "/";
+    } catch (err) {
+      if (err.response && err.response.status === 400) {
+        setFormError(err.response.data.message);
+        setIsLoading(false);
+      }
+    }
+  };
 
   return (
     <>
@@ -129,18 +144,21 @@ const SignUp = () => {
               )}
             </div>
             <div>
-              <label htmlFor="address">Address</label>
+              <label htmlFor="deliveryAddress">Delivery Address</label>
               <textarea
-                id="address"
-                className="form_text_input"
+                id="deliveryAddress"
+                className="input_textarea"
                 placeholder="Enter your delivery address..."
-                {...register("address")}
+                {...register("deliveryAddress")}
               />
-              {errors.address && (
-                <em className="form_error">{errors.address.message}</em>
+              {errors.deliveryAddress && (
+                <em className="form_error">{errors.deliveryAddress.message}</em>
               )}
             </div>
-            <button className="form_submit">Submit</button>
+            <em className="form_error">{formError}</em>
+            <button className="form_submit" disabled={isLoading}>
+              {isLoading ? "Loading..." : "Submit"}
+            </button>
           </div>
         </form>
       </section>

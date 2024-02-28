@@ -7,6 +7,7 @@ import MyOrder from "../MyOrder/MyOrder";
 import HomePage from "../Home/HomePage";
 import ProductsPage from "../Products/ProductsPage";
 import SingleProductPage from "../SingleProduct/SingleProductPage";
+import Logout from "../Authentication/Logout";
 
 const Routing = () => {
   return (
@@ -19,6 +20,7 @@ const Routing = () => {
         <Route path="/myorders" element={<MyOrder />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/logout" element={<Logout />} />
       </Routes>
     </>
   );

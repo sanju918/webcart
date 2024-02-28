@@ -6,7 +6,7 @@
 }
 
 .input_textarea {
-    height: 120px;
+    height: 160px;
 }
 
 .image_label {
@@ -21,4 +21,10 @@
 
 .image_input {
     margin: 10px;
+}
+
+.form_submit:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
 }
