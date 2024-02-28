@@ -11,7 +11,7 @@ import ordersIcon from "../../assets/icons/orders.png";
 import logoutIcon from "../../assets/icons/power-off.png";
 import cartIcon from "../../assets/icons/cart.png";
 
-const Navbar = ({ user }) => {
+const Navbar = ({ user, cartCount }) => {
   return (
     <>
       <nav className="align_center navbar">
@@ -54,9 +54,9 @@ const Navbar = ({ user }) => {
                 emoji={ordersIcon}
               />
               <LinkWithIcons title="Logout" link="/logout" emoji={logoutIcon} />
-              <NavLink href="/cart" className="align_center">
+              <NavLink to="/cart" className="align_center">
                 <img src={cartIcon} alt="cart icon" className="cart_emoji" />
-                <p className="align_center cart_counts">0</p>
+                <p className="align_center cart_counts">{cartCount}</p>
               </NavLink>
             </>
           )}

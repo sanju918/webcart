@@ -1,7 +1,6 @@
 import "./QuantityInput.css";
 
 const QuantityInput = ({ quantity, setQuantity, stock }) => {
-  console.log("stock", stock);
   return (
     <>
       <button
