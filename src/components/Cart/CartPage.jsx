@@ -1,15 +1,20 @@
+import { useEffect, useState, useContext } from "react";
+
 import "./CartPage.css";
-import user from "../../assets/icons/user.webp";
+
 import remove from "../../assets/icons/remove.png";
 import Table from "../Common/Table";
 import QuantityInput from "../SingleProduct/QuantityInput";
-import { useEffect, useState } from "react";
+import UserContext from "../../contexts/UserContext";
+import CartContext from "../../contexts/CartContext";
 
-const CartPage = ({ getCart, cart }) => {
+const CartPage = () => {
   const [subTotal, setSubTotal] = useState(0);
 
+  const { cart } = useContext(CartContext);
+  const user = useContext(UserContext);
+
   useEffect(() => {
-    getCart();
     let total = 0;
     cart.forEach((element) => {
       total += element.product.price * element.quantity;
@@ -21,10 +26,13 @@ const CartPage = ({ getCart, cart }) => {
     <>
       <section className="align_center cart_page">
         <div className="align_center user_info">
-          <img src={user} alt="user profile" />
+          <img
+            src={`http://localhost:5001/profile/${user?.profilePic}`}
+            alt="user profile"
+          />
           <div>
-            <p className="user_name">Sanjay Patel</p>
-            <p className="user_email">sanjaypatel@gmail.com</p>
+            <p className="user_name">{user?.name}</p>
+            <p className="user_email">{user?.email}</p>
           </div>
         </div>
         <Table headings={["Item", "Price", "Quantity", "Total", "Remove"]}>

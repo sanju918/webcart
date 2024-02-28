@@ -9,20 +9,14 @@ import ProductsPage from "../Products/ProductsPage";
 import SingleProductPage from "../SingleProduct/SingleProductPage";
 import Logout from "../Authentication/Logout";
 
-const Routing = ({ addToCart, getCart, cart }) => {
+const Routing = () => {
   return (
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/products" element={<ProductsPage />} />
-        <Route
-          path="/products/:id"
-          element={<SingleProductPage addToCart={addToCart} />}
-        />
-        <Route
-          path="/cart"
-          element={<CartPage getCart={getCart} cart={cart} />}
-        />
+        <Route path="/products/:id" element={<SingleProductPage />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route path="/myorders" element={<MyOrder />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUp />} />

@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 
 import LinkWithIcons from "./LinkWithIcons";
@@ -10,8 +11,13 @@ import signUpIcon from "../../assets/icons/sign-up.png";
 import ordersIcon from "../../assets/icons/orders.png";
 import logoutIcon from "../../assets/icons/power-off.png";
 import cartIcon from "../../assets/icons/cart.png";
+import UserContext from "../../contexts/UserContext";
+import CartContext from "../../contexts/CartContext";
 
-const Navbar = ({ user, cartCount }) => {
+const Navbar = () => {
+  const user = useContext(UserContext);
+  const { cart } = useContext(CartContext);
+
   return (
     <>
       <nav className="align_center navbar">
@@ -56,7 +62,7 @@ const Navbar = ({ user, cartCount }) => {
               <LinkWithIcons title="Logout" link="/logout" emoji={logoutIcon} />
               <NavLink to="/cart" className="align_center">
                 <img src={cartIcon} alt="cart icon" className="cart_emoji" />
-                <p className="align_center cart_counts">{cartCount}</p>
+                <p className="align_center cart_counts">{cart.length}</p>
               </NavLink>
             </>
           )}
