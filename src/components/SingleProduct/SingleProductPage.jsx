@@ -9,7 +9,7 @@ import Loader from "../Common/Loader";
 import CartContext from "../../contexts/CartContext";
 
 const SingleProductPage = () => {
-  const addToCart = useContext(CartContext);
+  const { addToCart } = useContext(CartContext);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const { id } = useParams();

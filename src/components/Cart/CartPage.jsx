@@ -11,7 +11,7 @@ import CartContext from "../../contexts/CartContext";
 const CartPage = () => {
   const [subTotal, setSubTotal] = useState(0);
 
-  const { cart } = useContext(CartContext);
+  const { cart, removeFromCart } = useContext(CartContext);
   const user = useContext(UserContext);
 
   useEffect(() => {
@@ -50,6 +50,7 @@ const CartPage = () => {
                     src={remove}
                     alt="remove icon"
                     className="cart_remove_icon"
+                    onClick={() => removeFromCart(product._id)}
                   />
                 </td>
               </tr>

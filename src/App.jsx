@@ -9,7 +9,11 @@ import Routing from "./components/Routing/Routing";
 import { getUser, logout } from "./services/userServices";
 import { getJwt } from "./services/userServices";
 import setAuthToken from "./utils/setAuthToken";
-import { addToCartAPI, getCartAPI } from "./services/cartServices";
+import {
+  addToCartAPI,
+  getCartAPI,
+  removeFromCartAPI,
+} from "./services/cartServices";
 import UserContext from "./contexts/UserContext";
 import CartContext from "./contexts/CartContext";
 
@@ -81,9 +85,21 @@ const App = () => {
     }
   }, [user]); // When user changes it will re-run the api
 
+  const removeFromCart = (id) => {
+    const oldCart = [...cart];
+    const newCart = oldCart.filter((item) => item.product._id !== id);
+    setCart(newCart);
+    removeFromCartAPI(id)
+      .then(toast.info("Product removed from cart"))
+      .catch((err) => {
+        toast.error("Couldn't remove item from the cart. Please try again.");
+        setCart(oldCart);
+      });
+  };
+
   return (
     <UserContext.Provider value={user}>
-      <CartContext.Provider value={{ cart, addToCart }}>
+      <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
         <div className="app">
           <Navbar />
           <main>
