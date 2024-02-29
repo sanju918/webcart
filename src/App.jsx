@@ -11,7 +11,9 @@ import { getJwt } from "./services/userServices";
 import setAuthToken from "./utils/setAuthToken";
 import {
   addToCartAPI,
+  decreaseProductAPI,
   getCartAPI,
+  increaseProductAPI,
   removeFromCartAPI,
 } from "./services/cartServices";
 import UserContext from "./contexts/UserContext";
@@ -97,9 +99,37 @@ const App = () => {
       });
   };
 
+  const updateCart = (type, id) => {
+    const updatedCart = [...cart];
+    const productIndex = updatedCart.findIndex(
+      (item) => item.product._id === id
+    );
+
+    if (type === "increase") {
+      updatedCart[productIndex].quantity += 1;
+      setCart(updatedCart);
+
+      increaseProductAPI(id).catch((err) => {
+        toast.error("Something went wrong!");
+        getCart();
+      });
+    }
+    if (type === "decrease") {
+      updatedCart[productIndex].quantity -= 1;
+      setCart(updatedCart);
+
+      decreaseProductAPI(id).catch((err) => {
+        toast.error("Something went wrong!");
+        getCart();
+      });
+    }
+  };
+
   return (
     <UserContext.Provider value={user}>
-      <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+      <CartContext.Provider
+        value={{ cart, addToCart, removeFromCart, updateCart }}
+      >
         <div className="app">
           <Navbar />
           <main>
