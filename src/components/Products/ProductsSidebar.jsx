@@ -1,4 +1,6 @@
 import "./ProductsSidebar.css";
+
+import config from "../../config.json";
 import LinkWithIcons from "../Navbar/LinkWithIcons";
 import useData from "../../hooks/useData";
 
@@ -16,7 +18,7 @@ const ProductsSidebar = () => {
                 key={category._id}
                 title={category.name}
                 sidebar={true}
-                emoji={`http://localhost:5001/category/${category.image}`}
+                emoji={`${config.backendURL}/category/${category.image}`}
                 link={`/products?category=${category.name}`}
               />
             ))}
