@@ -13,7 +13,8 @@ const ProductsList = () => {
   const searchQuery = search.get("search");
 
   const [page, setPage] = useState(1);
-
+  const [sortBy, setSortBy] = useState("");
+  const [sortedProducts, setSortedProducts] = useState([]);
   const navigate = useNavigate();
 
   const { data, error, isLoading } = useData(
