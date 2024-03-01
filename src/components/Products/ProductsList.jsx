@@ -9,21 +9,24 @@ import { useEffect, useState } from "react";
 
 const ProductsList = () => {
   const [search] = useSearchParams();
-  const [page, setPage] = useState(1);
   const category = search.get("category");
+  const searchQuery = search.get("search");
+
+  const [page, setPage] = useState(1);
+
   const navigate = useNavigate();
 
   const { data, error, isLoading } = useData(
     "/products",
     {
-      params: { category, page },
+      params: { search: searchQuery, category, page },
     },
-    [category, page]
+    [searchQuery, category, page]
   );
 
   useEffect(() => {
     setPage(1);
-  }, [category]);
+  }, [category, searchQuery]);
 
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8];
 

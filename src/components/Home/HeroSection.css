@@ -32,7 +32,7 @@
     text-transform: uppercase;
     letter-spacing: 1.5px;
     font-weight: 700;
-    border: 32px;
+    border: 2px solid;
     border-radius: 32px;
     background-color: #fff;
     color: #000;
@@ -43,13 +43,15 @@
     background-color: transparent;
     color: #fff;
     cursor: pointer;
+    border-color: #fff;
+    
 }
 
 .hero_image {
-    height: 500px;
+    height: 400px;
     transition: all 0.3s ease-in-out;
 }
 
 .hero_image:hover {
-    transform: scale(1.05s);
+    transform: scale(1.05);
 }

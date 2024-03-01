@@ -10,7 +10,7 @@ const HomePage = () => {
       <HeroSection
         title="Buy iPhone 14 Pro"
         image={iphone}
-        link="/"
+        link="/products/65db51809202180bca27e562"
         subtitle="Experience the power of the latest iPhone 14 Pro with our most Pro camera ever."
       />
 
@@ -21,7 +21,7 @@ const HomePage = () => {
       <HeroSection
         title="Build Ultimate Setup"
         image={mac}
-        link="/"
+        link="/products/65db51809202180bca27e56a"
         subtitle="You can add Studio Display and color-matched magic accessories to your bag after configure your Mac Mini."
       />
     </div>
