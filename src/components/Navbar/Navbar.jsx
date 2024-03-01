@@ -35,15 +35,18 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    if (search.trim() !== "") {
-      getSuggestionsAPI(search)
-        .then((res) => {
-          setSuggetions(res.data);
-        })
-        .catch((err) => console.log(err));
-    } else {
-      setSuggetions([]);
-    }
+    const delaySuggestions = setTimeout(() => {
+      if (search.trim() !== "") {
+        getSuggestionsAPI(search)
+          .then((res) => {
+            setSuggetions(res.data);
+          })
+          .catch((err) => console.log(err));
+      } else {
+        setSuggetions([]);
+      }
+    }, 300);
+    return () => clearTimeout(delaySuggestions);
   }, [search]);
 
   const handleKeyDown = (e) => {
