@@ -1,10 +1,11 @@
+import { memo, useContext } from "react";
+
 import "./ProductCard.css";
 
 import config from "../../config.json";
 import star from "../../assets/icons/white-star.png";
 import basket from "../../assets/icons/basket.png";
 import { NavLink } from "react-router-dom";
-import { useContext } from "react";
 import CartContext from "../../contexts/CartContext";
 import UserContext from "../../contexts/UserContext";
 
@@ -48,4 +49,4 @@ const ProductCard = ({ product }) => {
   );
 };
 
-export default ProductCard;
+export default memo(ProductCard);

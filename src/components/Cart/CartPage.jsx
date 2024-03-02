@@ -1,4 +1,4 @@
-import { useContext, useMemo } from "react";
+import { useContext, useMemo, memo } from "react";
 
 import "./CartPage.css";
 
@@ -12,8 +12,6 @@ import { checkoutAPI } from "../../services/orderServices";
 import { toast } from "react-toastify";
 
 const CartPage = () => {
-  // const [subTotal, setSubTotal] = useState(0);
-
   const { cart, removeFromCart, updateCart, setCart } = useContext(CartContext);
   const user = useContext(UserContext);
 
@@ -105,4 +103,4 @@ const CartPage = () => {
   );
 };
 
-export default CartPage;
+export default memo(CartPage);
